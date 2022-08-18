@@ -1,0 +1,33 @@
+package com.drbanner.app.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name="paquetes")
+public class Paquetes implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	@Id//primary key
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long idPaquete;
+
+	@Column(length = 150)
+	private String nombre;
+
+	private double costo;
+
+	@Column(length = 3000)
+	private String descripcion;
+
+	@ManyToMany
+	@JoinTable(
+		name = "paquetes_images", 
+		joinColumns = @JoinColumn(name = "id_paquete"), 
+		inverseJoinColumns = @JoinColumn(name = "id_imagen"))
+    Set<Imagenes> paqueteImagenes;
+	
+}
